@@ -33,7 +33,7 @@ Whether you're just exploring or deep into your own project, you'll find tools, 
 
 ### 🔍 Highlights from the Blog
 
-- [Welcome](/posts/2025-07-18-welcome)
+- [Welcome](/posts/welcome/)
 
 ---
 
