@@ -25,17 +25,15 @@ Whether you're just exploring or deep into your own project, you'll find tools, 
 
 ### 👉 Get Started
 
-- 📖 [Read the blog](/blog/)
-- 📬 [Contact us](/contact/)
-- 📄 [Download the whitepaper](/assets/whitepaper.pdf)
+- 📖 [Read the blog](/posts/)
+- 📬 Contact us
+- 📄 Download the whitepaper
 
 ---
 
 ### 🔍 Highlights from the Blog
 
-- [How to get started with XYZ](/blog/2024-05-12-getting-started)
-- [What we learned from a year of research](/blog/2024-10-10-research-review)
-- [Open-source tools we're using right now](/blog/2025-01-03-tools-we-love)
+- [Welcome](/posts/2025-07-18-welcome)
 
 ---
 
