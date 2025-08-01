@@ -1,6 +1,6 @@
 ---
 layout: page
-title: Guidebook -- Overview
+title: Guidebook - Overview
 permalink: /guidebook-overview
 ---
 
