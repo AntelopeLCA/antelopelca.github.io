@@ -26,7 +26,7 @@ If the flow is a material, say a product that a factory is shipping, the modeler
 The modeler can take advantage of *selective* observation to design re-usable models. Any flow whose target is not observed becomes a "cutoff." Cutoff flows can be linked later on during modeling to nodes that haven't yet been specified. If a modeler embeds one spanner as a subcomponent of a larger models, then the cutoff flows can get linked to exchanges contained in that larger model.  Thus the same spanner can generate different life cycle models by being re-used in different contexts.
 
 
-Take truck transportation. It is very common for LCA modelers to 
+Take truck transportation. It is very common for LCA modelers to make use of background data sources like USLCI or ecoinvent for modeling transportation, and then reflexively consider transportation (especially if it is operated by the client, e.g. "Scope 1") to be part of the model "foreground", but this is not *entirely* correct. Using our observation framework, we can understand that the foreground is limited to what the modeler observes, which in this case is most likely the transportation services used (mass or volume of goods, distance traveled, maybe the type or size of equipment).  These are foreground parameters. The emissions data are assuredly *not* being observed and these remain in the background.
 
 The modeler can link observations based on their vantage point. Imagine a machine on a factory floor it has a reference flow and a collection of child flows that can each be observed rom the machine's vantage point.  Those flows, in turn, imply other nodes, the "partners" to the exchange. The modeler can follow each flow in turn to its partner node, and make a new set of observations.
 

@@ -52,8 +52,8 @@ If you are planning on using Jupyter notebooks for your work, you need to add yo
 
 
 ```bash
-pip install jupyter ipykernel
-python -m ipykernel install --user --name=wwwxffj
+(wwwxffj) $ pip install jupyter ipykernel
+(wwwxffj) $ python -m ipykernel install --user --name=wwwxffj
 ```
 
 ## Installing Antelope
@@ -61,14 +61,14 @@ python -m ipykernel install --user --name=wwwxffj
 Once you're in your virtual environment, installing Antelope is simple:
 
 ```bash
-pip install antelope-foreground
+(wwwxffj) $ pip install antelope-foreground
 ```
 
 If you are planning on performing LCA computations using local background data, you may need some additional packages:
 
- * `antelope-background` for matrix inversion
+ * `antelope-background` for LCI matrix construction and inversion
  * `lxml` for accessing EcoSpold or ILCD data (soon I will add `antelope-xml` instead, but it does not exist yet)
- * `antelope-reports` 
+ * `antelope-reports` containing support tools for constructing and running models.
 
 Then, open up `ipython` and run:
 

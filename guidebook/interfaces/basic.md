@@ -6,11 +6,33 @@ permalink: /guidebook/interfaces/basic/
 
 # Basic Interface
 
-The Basic interface provides fundamental entity retrieval and documentary information access. It serves as the foundation for all other Antelope interfaces and is required for any valid query.
+The Basic interface provides fundamental entity retrieval and documentary information access. Because different interfaces can be implemented independently, it is possible to envision a resource without basic interface access; however, the information provided in the basic interface is fundamental to understanding and human interpretation of the data available in other interfaces.
 
-## Core Concept
+## Identity Definition and Retrieval
 
-The Basic interface treats data sources as collections of **entities** (processes, flows, quantities) with **properties** (metadata attributes). It provides the essential "get entity by ID" and "get property by name" operations that underpin all LCA data access.
+The Basic interface treats data sources as collections of **entities** (processes, flows, quantities) with **properties** (metadata attributes).  An entity is uniquely specified by its *origin* and its *external reference* (`external_ref`). The `external_ref` is often, though not always, a UUID.  The `origin` and `external_ref`, concatenated by `/`, form a "link", which provides enough information to retrieve the entity:
+
+```text
+link = 'lcacommons.uslci.fy24.q1.01/0aaf1e13-5d80-37f9-b7bb-81a6b8965c71'
+origin, external_ref = link.split('/')
+catalog.query(origin).get(external_ref).show()
+'''
+ProcessRef catalog reference (0aaf1e13-5d80-37f9-b7bb-81a6b8965c71)
+origin: lcacommons.uslci.fy24.q1.01
+   UUID: 0aaf1e13-5d80-37f9-b7bb-81a6b8965c71
+   Name: Petroleum refining, at refinery
+Comment: 
+==Local Fields==
+                  @type: Process
+        Classifications: ['31-33: Manufacturing', '3241: Petroleum and Coal Products Manufacturing']
+           SpatialScope: United States
+          TemporalScope: {'begin': '2009-01-01', 'end': '2023-12-31'}
+defaultAllocationMethod: PHYSICAL_ALLOCATION
+            description: This gate-to-gate unit process is for net production of 1 kilogram of general refinery product as well as data allocated to specific refinery...
+'''
+```
+
+For entities whose `external_ref` is not a UUID, it is typical (but not required) for the entity to *also* have a canonical UUID.
 
 ## Key Methods
 
@@ -24,12 +46,13 @@ flow = query.get('electricity-mix-us')
 ```
 
 #### `get_uuid(external_ref)` 
-Get the canonical UUID for an entity.
+Get the canonical UUID for an entity, in case it is different from the `external_ref`.
 ```python
 uuid = query.get_uuid('process-name')
 ```
 
 ### Property Access
+All entity properties are *case-insensitive*. 
 
 #### `properties(external_ref, **kwargs)`
 List all available properties for an entity.
@@ -43,6 +66,24 @@ Access a specific property value.
 ```python
 name = query.get_item('process-id', 'Name')
 location = query.get_item('process-id', 'SpatialScope')
+```
+
+#### Access from Entity
+Given an EntityRef object, properties can be accessed directly:
+```python
+p_ref = query.get('entity_id')
+list(p_ref.properties())
+# ['Name', 'Comment', 'SpatialScope', 'TemporalScope', ...]
+p_ref.get_item('Name')
+# returns the process's name
+p_ref['Name'] 
+```
+
+#### Setting an Entity's Local Properties
+An EntityRef's properties can be set within a session, but those property settings are not propagated back
+to the data source (which )
+# returns the process's name
+p_ref['Name'] = 'Temporary name'  # sets the name of the *local* EntityRef
 ```
 
 ### System Operations
