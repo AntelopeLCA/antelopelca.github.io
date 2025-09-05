@@ -36,7 +36,12 @@ Nodes can be built in small pieces and linked together to implement a variety of
 
 [ need a visual ]
 
+# Foreground and Background
 
+One purpose of the foreground-background distinction is to leverage the modeler's perspective to give a clear definition of what has been modeled.  Everything the modeler has the capacity to specify becomes part of the foreground *by definition*.
 
+The flip side of that condition is that the background is *immutable*. No part of the background should be adjusted by the modeler, because it would then lose its characteristic of being external to the modeling task. 
+
+Under that principle, Antelope software is designed to treat all background data resources as *authoritative* and *read-only*. If a modeler wishes to make a modification to a background data set, it must be brought into the foreground first.  There is a set of [foreground modeling tools](/guidebook/foreground) that facilitates this approach.
 
 [Home](/guidebook/)

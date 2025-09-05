@@ -18,3 +18,4 @@ Articles in this section describe how Antelope works at a high level.
 This section deals with how to obtain and use Antelope for LCA computations.
 
  * [Installation](/guidebook-installation)
+ * [Quick Start](/guidebook-quickstart)
