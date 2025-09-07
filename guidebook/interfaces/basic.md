@@ -81,7 +81,7 @@ p_ref['Name']
 
 #### Setting an Entity's Local Properties
 An EntityRef's properties can be set within a session, but those property settings are not propagated back
-to the data source (which )
+to the data source (which is immutable)
 # returns the process's name
 p_ref['Name'] = 'Temporary name'  # sets the name of the *local* EntityRef
 ```

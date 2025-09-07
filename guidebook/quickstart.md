@@ -1,11 +1,10 @@
 ---
 layout: page
 title: Antelope Quickstart
-permalink: /guidebook/quickstart
+permalink: /guidebook-quickstart
 ---
 
-# Quick Start Guide
-Antelope can be [installed]({% link installation.md %}) directly from `pip` and operated either with cloud-based or local data.  This page gives instructions on how to:
+Antelope can be [installed]({% link guidebook/installation.md %}) directly from `pip` and operated either with cloud-based or local data.  This page gives instructions on how to:
  - Start up a local catalog
  - obtain resources from the cloud
  - obtain resources from local files
@@ -32,8 +31,8 @@ Use the username and API key reported there to authenticate to the server. You c
 ```python
 >>> cat.blackbook_authenticate('https://sc.vault.lc/')
 '''
-Enter username to access blackbook server at https://sc.vault.lc/: satyr' 
-Enter password to access blackbook server at https://sc.vault.lc/: '
+Enter username to access blackbook server at https://sc.vault.lc/: satyr
+Enter password to access blackbook server at https://sc.vault.lc/: 
 POST https://sc.vault.lc/auth/token.. 200 [0.63 sec]
 Welcome back to blackbook, hosted by ANTELOPE_AUTHORITY.
 Username: satyr, email: bkuczenski@bren.ucsb.edu
@@ -66,13 +65,12 @@ GET https://sc.vault.lc/origins.. 200 [0.13 sec]
 
 ### Obtain a resource
 
-```python
+```pycon
 >>> cat.get_blackbook_resources('lcacommons.uslci.fy24.q1.01')
 'GET https://sc.vault.lc/origins/lcacommons.uslci.fy24.q1.01/token.. 200 [0.73 sec]'
 >>> cat.show_interfaces()
-"""
-lcacommons.uslci.fy24.q1.01 [background, basic, exchange, index]
-local.qdb [basic, index, quantity]"""
+'lcacommons.uslci.fy24.q1.01 [background, basic, exchange, index]'
+'local.qdb [basic, index, quantity]'
 >>> cat.query('lcacommons.uslci').get('0aaf1e13-5d80-37f9-b7bb-81a6b8965c71').name
 ' Petroleum refining, at refinery [United States] '
 ```
@@ -88,12 +86,12 @@ To create a local resource, you need to identify the following items:
  - `ds_type` - the Antelope [provider](/guidebook/providers) that understands how to interpret the data source
  - `interfaces` - the list of [interfaces](/guidebook/interfaces) the data source supports. 
 
-> [!TIP]
 > Note: Many useful providers, including `EcospoldV1Archive`, `EcospoldV2Archive`, and `IlcdArchive`,
 > require the python `lxml` library to be installed (this is not installed by default)
+{: .prompt-tip }
 
 For this example, we will use the "FHWA Asphalt Framework" dataset from the LCA commons.  (see also 
-[FHWA Part I]({% link /posts/fhwa-part-I % }) for more details)
+[FHWA Part I]({ % link /posts/fhwa-part-I % }) for more details)
 
 Note that this archive contains ambiguous links; therefore we must provide instructions about how to resolve these links when we generate the background matrix. We do this by providing the argument `multi_term` to `check_bg()` and specify it as `'cutoff'`.
 
@@ -113,7 +111,7 @@ cat.index_ref('fhwa')  # takes about 30 seconds to load and store all content
 cat.background_for_origin('fhwa')  # creates a background interface
 cat.query('fhwa').check_bg(multi_term='cutoff')  # takes about 10 seconds to create the ordered background
 cat.show_interfaces()
-'''
+''' Output:
 fhwa [basic, exchange, quantity]
 fhwa.index-20250904 [basic, index, background]
 local.qdb [basic, index, quantity]
@@ -133,7 +131,7 @@ from antelope_core import LcCatalog
 cat = LcCatalog()
 cat.new_resource('fhwa', '/path/to/the-file.zip', 'OpenLcaJsonLdArchive', interfaces=('basic', 'exchange', 'index', 'quantity'), static=True)
 cat.background_for_origin('fhwa')  # takes about 30 seconds to load the archive
-cat.query('fhwa').check_bg(multi_term='cutoff')
+cat.query('fhwa').check_bg(multi_term='cutoff')  # takes about 10 seconds to create the ordered background
 cat.show_interfaces()
 '''
 fhwa [background, basic, exchange, index, quantity]

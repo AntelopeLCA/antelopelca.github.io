@@ -4,8 +4,6 @@ title: Antelope Interface Reference
 permalink: /guidebook/interfaces/
 ---
 
-# Antelope Interface Reference
-
 Antelope organizes LCA functionality into seven distinct interfaces, each providing access to different types of operations and data. This modular design allows data sources to implement only the interfaces they support, while clients can discover available functionality dynamically.
 
 ## Origins and Queries
@@ -36,15 +34,15 @@ LCA information is organized into several "interfaces" that (a) represent differ
 
 Under Antelope, reference data sources are all considered to be *read-only*, meaning that their contents may not be altered by a user.  All user modifications are intended to occur within the [foreground](../foreground/index.md).
 
-| Interface                       | Purpose                                        | Key Operations                        | Access Type   |
-|---------------------------------|------------------------------------------------|---------------------------------------|---------------|
-| [**Basic**](basic.md)           | Entity retrieval and properties                | get(), properties(), validate()       | Read-only     |
-| [**Index**](index-interface.md) | Search and enumeration                         | processes(), flows(), count()         | Read-only     |
-| [**Exchange**](exchange.md)     | Process inventories and exchange relationships | inventory(), exchanges(), ev()        | Read-only     |
-| [**Background**](background.md) | Matrix operations and system LCI               | lci(), sys_lci(), consumers()         | Read-only     |
-| [**Quantity**](quantity.md)     | Unit conversion and LCIA                       | cf(), do_lcia(), factors()            | Read-Write    |
-| [**Configure**](configure.md)   | Resource configuration; allocation             | set_reference(), characterize_flow()  | Read-Write    |
-| [**Foreground**](foreground.md) | Foreground modeling and observation            | new_fragment(), observe(), traverse() | Read-Write    |
+| Interface                    | Purpose                                        | Key Operations                        | Access Type |
+|------------------------------|------------------------------------------------|---------------------------------------|-------------|
+| [**Basic**](basic)           | Entity retrieval and properties                | get(), properties(), validate()       | Read-only   |
+| [**Index**](index-interface) | Search and enumeration                         | processes(), flows(), count()         | Read-only   |
+| [**Exchange**](exchange)     | Process inventories and exchange relationships | inventory(), exchanges(), ev()        | Read-only   |
+| [**Background**](background) | Matrix operations and system LCI               | lci(), sys_lci(), consumers()         | Read-only   |
+| [**Quantity**](quantity)     | Unit conversion and LCIA                       | cf(), do_lcia(), factors()            | Read-Write  |
+| [**Configure**](configure)   | Resource configuration; allocation             | set_reference(), characterize_flow()  | Read-Write  |
+| [**Foreground**](foreground) | Foreground modeling and observation            | new_fragment(), observe(), traverse() | Read-Write  |
 
 ## Interface Dependencies
 
