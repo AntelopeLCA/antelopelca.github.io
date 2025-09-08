@@ -143,7 +143,7 @@ terms = query.synonyms('carbon dioxide')
 ### LCIA Information
 
 LCIA computation is considered part of the "basic" interface. One of the key characteristics of Antelope 
-is its use of a [quantity database](/guidebook-qdb) for harmonizing flows, quantities, and environmental
+is its use of a [quantity database](/guidebook/qdb) for harmonizing flows, quantities, and environmental
 contexts.  Individual data resources are either "term managers," simple data accessors that retrieve source-specific data accurately, or "LCIA engines", which perform harmonization with the canonical flowables and contexts.  Only LCIA engines properly perform LCIA computations across mixed data sources.
 
 #### `is_lcia_engine(**kwargs)`
@@ -235,10 +235,10 @@ For Processes:
 Reminder: all property names are case-insensitive.
 
 ### Reference vs. Entity
-The Basic interface works with both "entities" (full objects) and "entity references" (lightweight proxies). Catalog queries always return entity references, which include an embedded query object to implement entity-specific methods. Entity references can only be dereferenced to actual entities by accessing the [archives](/guidebook-providers) using `catalog.get_archive(origin, iface)`, where `iface` is one of `basic`, `exchange`, etc. 
+The Basic interface works with both "entities" (full objects) and "entity references" (lightweight proxies). Catalog queries always return entity references, which include an embedded query object to implement entity-specific methods. Entity references can only be dereferenced to actual entities by accessing the [archives](/guidebook/providers) using `catalog.get_archive(origin, iface)`, where `iface` is one of `basic`, `exchange`, etc. 
 
 ## Next Steps
 
 - Learn about [Exchange Interface](../exchange) for inventory operations
 - See [Index Interface](../index-interface) for search capabilities
-- Review [Quick Start Guide](/guidebook-quickstart) for practical examples
+- Review [Quick Start Guide](/guidebook/quickstart) for practical examples

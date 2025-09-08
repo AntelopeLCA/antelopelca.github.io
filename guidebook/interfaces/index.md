@@ -33,7 +33,7 @@ fs = catalog.query('my.origin').flows(name="polyethylene")
 
 LCA information is organized into several "interfaces" that (a) represent different forms of knowledge about the data and (b) can be implemented using different back-end systems.  
 
-Under Antelope, reference data sources are all considered to be *read-only*, meaning that their contents may not be altered by a user.  All user modifications are intended to occur within the [foreground](../foreground/index.md).
+Under Antelope, reference data sources are all considered to be *read-only*, meaning that their contents may not be altered by a user.  All user modifications are intended to occur within the [foreground](foreground).
 
 | Interface                    | Purpose                                        | Key Operations                        | Access Type    |
 |------------------------------|------------------------------------------------|---------------------------------------|----------------|

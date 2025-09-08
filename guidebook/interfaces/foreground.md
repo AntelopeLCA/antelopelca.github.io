@@ -392,6 +392,5 @@ Foreground operations typically require:
 
 ## Next Steps
 
-- Review [Fragment Modeling Guide](/guidebook/fragments) for detailed examples
 - Learn about [Background Interface](../background/) for system integration
 - See [Quantity Interface](../quantity/) for impact assessment

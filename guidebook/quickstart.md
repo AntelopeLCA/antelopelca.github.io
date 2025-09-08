@@ -93,7 +93,7 @@ To create a local resource, you need to identify the following items:
 {: .prompt-tip }
 
 For this example, we will use the "FHWA Asphalt Framework" dataset from the LCA commons.  (see also 
-[FHWA Part I]({ % link /posts/fhwa-part-I % }) for more details)
+[FHWA Part I](/posts/fhwa-part-I) for more details)
 
 Note that this archive contains ambiguous links; therefore we must provide instructions about how to resolve these links when we generate the background matrix. We do this by providing the argument `multi_term` to `check_bg()` and specify it as `'cutoff'`.
 

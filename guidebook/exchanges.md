@@ -1,7 +1,7 @@
 ---
 layout: page
 title: Guidebook -- Exchanges
-permalink: /guidebook-exchanges
+permalink: /guidebook/exchanges
 ---
 
 ![A life cycle inventory "fragment" -- an observed material exchange](/assets/img/exchange.png)
