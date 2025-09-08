@@ -80,26 +80,17 @@ Generate LCIA-related quantities (broader than methods).
 lcia_quantities = list(query.lcia())
 ```
 
-### Flow-Process Relationships
+### Reference Exchanges
 
 #### `targets(flow, direction=None, **kwargs)`
-Find processes that can accept a flow as input (or provide as output).
+Find processes that include the specified flow as a reference exchange.  Optionally, specify a direction (`Input` or `Output`).
+
 ```python
 # Who can consume electricity?
 electricity_consumers = list(query.targets(electricity_flow, direction='Input'))
 
 # Who can provide steel?  
 steel_producers = list(query.targets(steel_flow, direction='Output'))
-
-# All processes connected to CO2 (any direction)
-co2_processes = list(query.targets(co2_flow))
-```
-
-#### `originate(flow, direction=None, **kwargs)`
-Find processes that originate/produce a flow (same direction).
-```python
-# Processes that output electricity
-electricity_sources = list(query.originate(electricity_flow, direction='Output'))
 ```
 
 ### Flow Matching and Validation
@@ -132,21 +123,14 @@ def explore_database(query):
 
 ### Flow Network Analysis
 ```python
-def analyze_flow_network(query, target_flow):
-    """Analyze supply/demand for a specific flow"""
-    producers = list(query.targets(target_flow, direction='Output'))
-    consumers = list(query.targets(target_flow, direction='Input'))
-    
-    print(f"Flow: {target_flow}")
-    print(f"Producers: {len(producers)}")
-    print(f"Consumers: {len(consumers)}")
-    
-    if len(producers) == 1:
-        print("Single producer (unique source)")
-    elif len(producers) == 0:
-        print("No producers (cutoff flow)")
-    else:
-        print(f"Multiple producers (choice required)")
+fs = list(query.flows(name='steel'))
+producers = list(fs[0].targets())
+if len(producers) == 1:
+    print("Single producer (unique source)")
+elif len(producers) == 0:
+    print("No producers (cutoff flow)")
+else:
+    print(f"Multiple producers (choice required)")
 ```
 
 ## Error Handling

@@ -1,7 +1,9 @@
 ---
 layout: page
 title: Guidebook - Installing Antelope
-permalink: /guidebook-installation
+permalink: /guidebook/installation
+parent: Guidebook
+categories: [Guidebook]
 ---
 
 # Installation

@@ -2,6 +2,7 @@
 layout: page
 title: Exchange Interface
 permalink: /guidebook/interfaces/exchange/
+parent: /guidebook/interfaces/
 ---
 
 # Exchange Interface
@@ -14,7 +15,7 @@ The Exchange interface models processes as collections of **exchanges** - quanti
 
 This interface answers questions like:
 - "What inputs does this process consume?"
-- "How much CO₂ is emitted per kWh of electricity produced?"
+- "How much CO₂ is (directly) emitted per kWh of electricity produced?"
 - "What is the full inventory of this process?"
 
 ## Key Methods
@@ -23,24 +24,22 @@ This interface answers questions like:
 
 #### `exchanges(process, **kwargs)`
 Retrieve a process's complete exchange list without quantitative values.
+
+Returns a generator of [`ExchangeRef`](/guidebook-exchanges#exchangerefs) objects. Note that a `termination` for a linked exchange is an `external_ref` for a process, not the target process itself.
 ```python
-exchanges = list(query.exchanges(process))
-for ex in exchanges:
-    print(f"{ex.direction}: {ex.flow} -> {ex.termination}")
+process = query.get('my_process_id')
+for ex in sorted(process.exchanges())
+    if ex.type == 'node':
+        tgt = query.get(ex.termination)
+        print(f"{ex.direction}: {ex.flow} -> {tgt.name}")
+    elif ex.type == 'context':
+        print(f"{ex.direction}: {ex.flow} -> {ex.termination.name}")
+    else:
+        print(f"{ex.direction}: {ex.flow}  ({ex.type})")
 ```
 
 ### Quantitative Exchange Relations
 
-#### `ev(process, flow, direction=None, termination=None, ref_flow=None, **kwargs)`
-Get the exchange value - the fundamental quantitative relationship.
-```python
-# CO2 emissions per unit of process activity
-co2_rate = query.ev(process, co2_flow, direction='Output')
-
-# Energy input per kg of product output  
-energy_per_kg = query.ev(process, energy_flow, 
-                        direction='Input', ref_flow=product_flow)
-```
 
 #### `exchange_values(process, flow, direction=None, termination=None, reference=None, **kwargs)`
 Retrieve detailed exchange information with values (somewhat deprecated).
@@ -48,6 +47,22 @@ Retrieve detailed exchange information with values (somewhat deprecated).
 exchanges = query.exchange_values(process, electricity_flow, direction='Input')
 ```
 
+#### `ev(process, flow, direction=None, termination=None, ref_flow=None, **kwargs)`
+Get the exchange value per unit of reference flow - the fundamental quantitative relationship.  Returns a float. If the process has multiple references, one must be specified.
+```python
+# CO2 emissions per unit of process activity
+process = query.get('process ref')
+rx = process.reference()  # a reference exchange
+co2_flows = list(query.flows(name='carbon dioxide'))
+co2_flow = co2_flows[7]
+energy_flows = list(k for k in process.exchanges() if k.flow.unit == 'MJ')
+
+co2_per_kg = process.ev(co2_flow, direction='Output')
+
+total_mj_per_kg = sum(process.ev(process, energy_flow, 
+                                 direction='Input', ref_flow=rx.flow)
+                      for energy_flow in energy_flows)
+```
 ### Process Inventories
 
 #### `inventory(process, ref_flow=None, scenario=None, **kwargs)`
@@ -56,17 +71,18 @@ Get the complete inventory of a process, optionally normalized to a reference fl
 **Unallocated inventory** (no reference flow):
 ```python
 # All exchanges including reference flows
-inventory = query.inventory(process)
-for ex in inventory:
-    print(f"{ex.direction}: {ex.value} {ex.flow}")
+inventory = query.inventory('process ref')
+for i, ex in enumerate(inventory):
+    print('%3d %s' % (i, ex))
 ```
 
 **Allocated inventory** (with reference flow):
 ```python
 # Non-reference exchanges per unit of reference
-inventory = query.inventory(process, ref_flow=main_product)
+inventory = process.inventory(ref_flow=main_product)
+print(process.reference(main_product))
 for ex in inventory:
-    print(f"{ex.direction}: {ex.value} {ex.flow} per {ref_flow}")
+    print(ex)
 ```
 
 ### LCIA Integration
@@ -75,15 +91,15 @@ for ex in inventory:
 Perform contribution analysis of a process's LCIA impact.
 ```python
 # Impact contribution by exchange
-contributions = query.contrib_lcia(process, quantity=gwp_quantity)
-for contrib in contributions:
-    print(f"{contrib.flow}: {contrib.cumulative_result} kg CO2-eq")
+result = query.contrib_lcia(process, quantity=gwp_quantity)
+result.show_components()
 ```
 
 ### Advanced Relations
 
 #### `exchange_relation(process, ref_flow, exch_flow, direction, termination=None, **kwargs)`
-Get detailed exchange relation information (analogous to `quantity.quantity_relation`).
+Get detailed exchange relation information (analogous to `quantity.quantity_relation`).  This answers the
+question, "how much of `exch_flow` is (input/output) per unit of `ref_flow`?"  If 
 ```python
 relation = query.exchange_relation(process, product_flow, input_flow, 'Input')
 ```
@@ -115,17 +131,6 @@ def analyze_process(query, process):
             print(f"  {out.value} {out.flow}")
 ```
 
-### Exchange Value Lookup
-```python
-def get_specific_exchange(query, process, target_flow, direction):
-    """Find exchange value for specific flow and direction"""
-    try:
-        value = query.ev(process, target_flow, direction=direction)
-        return value
-    except ExchangeRequired:
-        print(f"No {direction.lower()} of {target_flow} found in {process}")
-        return None
-```
 
 ### Multi-Product Process Handling
 ```python
@@ -145,7 +150,7 @@ def handle_multiproduct_process(query, process):
 
 ## Error Handling
 
-- **`ExchangeRequired`**: Operation requires Exchange interface but none found
+- **`ExchangeRequired`**: Operation requires Exchange interface but none found / not authorized
 - May also raise Basic interface exceptions for entity access
 
 ## Implementation Notes
@@ -157,30 +162,18 @@ The behavior of `inventory()` depends critically on the reference flow parameter
 2. **Valid reference flow**: Returns non-reference exchanges normalized to reference unit
 3. **Invalid reference flow**: Behavior is implementation-dependent
 
-### Allocation Handling
-When a process has multiple reference flows (co-products), the Exchange interface handles allocation:
-- Some implementations require explicit allocation configuration
-- Others may apply default allocation rules
-- The `configure` interface provides allocation control
-
-### Fragment Integration
-For fragment entities (from foreground modeling), the Exchange interface:
-- Accepts `scenario` parameter instead of `ref_flow`
-- May traverse fragment trees to compute inventories
-- Integrates with foreground modeling workflows
-
 ### Values Permission
 Some Exchange interface operations require `values=True` authorization:
 - Quantitative methods like `ev()` and `inventory()`
-- Documentary methods like `exchanges()` may work without values
+- Documentary methods like `exchanges()` return value-free results
 
 ## Relationship to Other Interfaces
 
 - **Basic**: Required for entity access and properties
 - **Index**: Often used together for process discovery
 - **Quantity**: Provides LCIA analysis of exchange inventories  
-- **Background**: Uses Exchange data to build technology matrices
-- **Configure**: Provides allocation and reference flow management
+- **Background**: Uses Exchange data to build LCI matrices
+- **Configure**: Used to specify allocation and reference flow linking in preparation for building LCI matrices. 
 
 ## Next Steps
 

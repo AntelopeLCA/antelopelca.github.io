@@ -51,4 +51,24 @@ If the target for an exchange is not an industrial activity but an environmental
 
 If the target for the exchange is unclear or not specified, then the flow becomes a "cutoff" exchange.  These cutoffs become important in model reuse later on.
 
+# ExchangeRefs
+
+Exchanges are tracked in Antelope in the form of `ExchangeRef` objects, which include the following properties:
+
+ - `process`: the parent process (`ProcessRef`) that generates the exchange
+ - `flow`: the flow (`FlowRef`) being exchanged
+ - `direction`: a string (`Input` or `Output`) relative to the parent process
+ - `type` a string indicating the type of termination; one of (`reference`, `node`, `context`, `cutoff`)
+ - `termination`: the "other end" of the exchange: either
+   - the `external_ref` of a linked process (a string) that includes the flow as a reference exchange
+   - a `Context` if the exchange is not linked to a providing process
+   - `None` if the exchange is a cut-off or a reference exchange.
+ - `value`: the magnitude of the exchange
+   - if the exchange is an `UnallocatedExchange` then this will be the magnitude of the un-allocated flow
+   - if the exchange is an `AllocatedExchange` then this will be the magnitude *per unit* of the allocated reference
+ - `comment`: a text-based comment (implementation varies by provider)
+ - `locale`: the locale of the exchange (deprecated: this will be changed to `location' in the future)
+ - other properties. ExchangeRefs can be assigned other properties at creation.
+
+
 [Home](/guidebook/)

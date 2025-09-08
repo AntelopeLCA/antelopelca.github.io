@@ -2,6 +2,7 @@
 layout: page
 title: Antelope Interface Reference
 permalink: /guidebook/interfaces/
+parent: /guidebook
 ---
 
 Antelope organizes LCA functionality into seven distinct interfaces, each providing access to different types of operations and data. This modular design allows data sources to implement only the interfaces they support, while clients can discover available functionality dynamically.
@@ -34,15 +35,15 @@ LCA information is organized into several "interfaces" that (a) represent differ
 
 Under Antelope, reference data sources are all considered to be *read-only*, meaning that their contents may not be altered by a user.  All user modifications are intended to occur within the [foreground](../foreground/index.md).
 
-| Interface                    | Purpose                                        | Key Operations                        | Access Type |
-|------------------------------|------------------------------------------------|---------------------------------------|-------------|
-| [**Basic**](basic)           | Entity retrieval and properties                | get(), properties(), validate()       | Read-only   |
-| [**Index**](index-interface) | Search and enumeration                         | processes(), flows(), count()         | Read-only   |
-| [**Exchange**](exchange)     | Process inventories and exchange relationships | inventory(), exchanges(), ev()        | Read-only   |
-| [**Background**](background) | Matrix operations and system LCI               | lci(), sys_lci(), consumers()         | Read-only   |
-| [**Quantity**](quantity)     | Unit conversion and LCIA                       | cf(), do_lcia(), factors()            | Read-Write  |
-| [**Configure**](configure)   | Resource configuration; allocation             | set_reference(), characterize_flow()  | Read-Write  |
-| [**Foreground**](foreground) | Foreground modeling and observation            | new_fragment(), observe(), traverse() | Read-Write  |
+| Interface                    | Purpose                                        | Key Operations                        | Access Type    |
+|------------------------------|------------------------------------------------|---------------------------------------|----------------|
+| [**Basic**](basic)           | Entity retrieval and properties                | get(), properties(), validate()       | Read-only      |
+| [**Index**](index-interface) | Search and enumeration                         | processes(), flows(), count()         | Read-only      |
+| [**Exchange**](exchange)     | Process inventories and exchange relationships | inventory(), exchanges(), ev()        | Read-only      |
+| [**Background**](background) | Matrix operations and system LCI               | lci(), sys_lci(), consumers()         | Read-only      |
+| [**Quantity**](quantity)     | Unit conversion and LCIA                       | cf(), do_lcia(), factors()            | **Read-Write** |
+| [**Configure**](configure)   | Resource configuration; allocation             | set_reference(), characterize_flow()  | **Read-Write** |
+| [**Foreground**](foreground) | Foreground modeling and observation            | new_fragment(), observe(), traverse() | **Read-Write** |
 
 ## Interface Dependencies
 
@@ -54,6 +55,21 @@ The interfaces build upon each other in layers:
 - **Quantity**: Works with any of the above for LCIA operations
 - **Configure**: Mainly oriented towards linking and allocation to prepare background LCI data
 - **Foreground**: Uses all interfaces for comprehensive modeling
+
+
+## Qualitative and quantitative information 
+
+Each interface may include both qualitative (structured non-numeric) and quantitative (numeric) information.  In access-controlled settings, access grants include a boolean flag for `values` which indicates whether the grantee is authorized to receive numerical information.
+
+Quantitative information varies by interface according to the following table:
+
+| Interface  | Qualitative information                            | Quantitative Information       |
+|------------|----------------------------------------------------|--------------------------------|
+| Basic      | Entity documentation                               | Aggregated LCIA results        |
+| Index      | Searchability                                      | Linking data                   |
+| Exchange   | Exchanges                                          | Exchanges with exchange values |
+| Background | Ordering (foreground, background, emission, cutoff | LCI Results                    | 
+| Quantity   | Characterizations                                  | Characterization values        |
 
 ## Query Pattern
 

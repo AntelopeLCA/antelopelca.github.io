@@ -1,7 +1,7 @@
 ---
 layout: page
 title: Guidebook - Overview
-permalink: /guidebook-overview
+permalink: /guidebook/overview
 ---
 
 # What does Antelope do ??

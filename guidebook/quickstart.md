@@ -1,10 +1,11 @@
 ---
 layout: page
 title: Antelope Quickstart
-permalink: /guidebook-quickstart
+permalink: /guidebook/quickstart
+parent: /guidebook/
 ---
 
-Antelope can be [installed]({% link guidebook/installation.md %}) directly from `pip` and operated either with cloud-based or local data.  This page gives instructions on how to:
+Antelope can be [installed](/guidebook/installation) directly from `pip` and operated either with cloud-based or local data.  This page gives instructions on how to:
  - Start up a local catalog
  - obtain resources from the cloud
  - obtain resources from local files
@@ -22,7 +23,8 @@ cat = ForegroundCatalog()
 cat.blackbook_guest('https://sc.vault.lc/')
 ```
 
-If/once you create your own account, you will need to determine your API password from the `vault.lc` Settings page by clicking the "Reveal API key" button.
+If you create your own account on [vault.lc](https://vault.lc/start?mode=signup), an API password will be
+created for you.  You need to determine that API password from the `vault.lc` Settings page by logging in, clicking "Settings" in the top right corner, and finding the "Reveal API key" button.
 
 ![API Credentials are assigned by vault.lc](/assets/img/vault-credentials.png)
 
@@ -104,7 +106,7 @@ If you want to access the material repeatedly over several sessions, you should 
 In this approach, since we are saving our work, we will also create and save an index and an ordered background.
 ```python
 from antelope_core import LcCatalog
-cat = LcCatalog('/path/to/catalog')
+cat = LcCatalog('/make/a/catalog')  # replace with a path to a location on your computer
 cat.new_resource('fhwa', '/path/to/the-file.zip', 'OpenLcaJsonLdArchive', 
                  interfaces=('basic', 'exchange', 'quantity'))
 cat.index_ref('fhwa')  # takes about 30 seconds to load and store all content
