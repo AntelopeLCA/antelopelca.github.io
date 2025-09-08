@@ -25,7 +25,7 @@ This interface answers questions like:
 #### `exchanges(process, **kwargs)`
 Retrieve a process's complete exchange list without quantitative values.
 
-Returns a generator of [`ExchangeRef`](/guidebook-exchanges#exchangerefs) objects. Note that a `termination` for a linked exchange is an `external_ref` for a process, not the target process itself.
+Returns a generator of [`ExchangeRef`](/guidebook/exchanges#exchangerefs) objects. Note that a `termination` for a linked exchange is an `external_ref` for a process, not the target process itself.
 ```python
 process = query.get('my_process_id')
 for ex in sorted(process.exchanges())
