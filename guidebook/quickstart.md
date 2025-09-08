@@ -104,9 +104,14 @@ First, obtain the OpenLCA v2 JSON-LD archive (.zip) from the Federal Commons web
 If you want to access the material repeatedly over several sessions, you should create a permanent catalog to store the derived datasets (namely: an index and an ordered background).  To do this, you simply need to provide a *catalog root* to the `LcCatalog()` command-- this is a directory on your computer that will store the content. If the directory doesn't exist, it will be created.
 ]
 In this approach, since we are saving our work, we will also create and save an index and an ordered background.
+
+> While strict benchmarking can be performed using `LcCatalog` in `antelope_core`, the ability to create
+> fragments and perform other modeling is only available in a `ForegroundCatalog`. 
+{: .prompt-tip }
+
 ```python
-from antelope_core import LcCatalog
-cat = LcCatalog('/make/a/catalog')  # replace with a path to a location on your computer
+from antelope_foreground import ForegroundCatalog
+cat = ForegroundCatalog('/make/a/catalog')  # replace with a path to a location on your computer
 cat.new_resource('fhwa', '/path/to/the-file.zip', 'OpenLcaJsonLdArchive', 
                  interfaces=('basic', 'exchange', 'quantity'))
 cat.index_ref('fhwa')  # takes about 30 seconds to load and store all content
@@ -129,8 +134,8 @@ q.count('process')
 If you want to access the database on a one-off basis, the process is a little simpler. We don't bother creating a permanent index, we only treat the data source as *static* (meaning we load it in its entirety 
 on first access). It's not any faster, just a little less cluttered.
 ```python
-from antelope_core import LcCatalog
-cat = LcCatalog()
+from antelope_foreground import ForegroundCatalog
+cat = ForegroundCatalog()
 cat.new_resource('fhwa', '/path/to/the-file.zip', 'OpenLcaJsonLdArchive', interfaces=('basic', 'exchange', 'index', 'quantity'), static=True)
 cat.background_for_origin('fhwa')  # takes about 30 seconds to load the archive
 cat.query('fhwa').check_bg(multi_term='cutoff')  # takes about 10 seconds to create the ordered background
