@@ -51,7 +51,7 @@ If the target for an exchange is not an industrial activity but an environmental
 
 If the target for the exchange is unclear or not specified, then the flow becomes a "cutoff" exchange.  These cutoffs become important in model reuse later on.
 
-# ExchangeRefs
+## ExchangeRefs
 
 Exchanges are tracked in Antelope in the form of `ExchangeRef` objects, which include the following properties:
 
