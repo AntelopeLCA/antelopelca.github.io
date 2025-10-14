@@ -1,11 +1,11 @@
 ---
 layout: page
-title: QDB Dash - Web Interface
+title: qdb Dash - Web Interface
 permalink: /guidebook/qdb-dash
 parent: /guidebook/
 ---
 
-The QDB Dash application provides a web-based interface for exploring and analyzing the Quantity Database (QDB). It allows you to search for flowables, contexts, and LCIA quantities, examine their details, and build custom selections for analysis.
+The qdb Dash application provides a web-based interface for exploring and analyzing the Antelope Quantity Database (qdb). It allows you to search for flowables, contexts, and LCIA quantities, examine their details, and build custom selections for analysis.
 
 ## Contents
 {:.no_toc}
@@ -15,11 +15,18 @@ The QDB Dash application provides a web-based interface for exploring and analyz
 
 ## Accessing QDB Dash
 
-The QDB Dash application is available when running the QDB API server. Once the server is running, navigate to:
+The qdb Dash application is currently available in demo mode. Navigate to:
 
 ```
-http://localhost:8000/qdb.dash/
+https://bk.vault.lc/qdb.dash/
 ```
+(note the trailing slash)
+
+> The demo version of qdb is running on a server with limited resources, so please be patient!
+{: .prompt-tip }
+
+
+[![qdb landing page](/assets/img/qdb-landing-full.png)](https://bk.vault.lc/qdb.dash/)
 
 The interface consists of three main pages:
 - **Search/Landing Page**: Search and browse flowables, contexts, and quantities
