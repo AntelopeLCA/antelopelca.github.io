@@ -67,7 +67,7 @@ GET https://sc.vault.lc/origins.. 200 [0.13 sec]
 
 ### Obtain a resource
 
-```pycon
+```python
 >>> cat.get_blackbook_resources('lcacommons.uslci.fy24.q1.01')
 'GET https://sc.vault.lc/origins/lcacommons.uslci.fy24.q1.01/token.. 200 [0.73 sec]'
 >>> cat.show_interfaces()
