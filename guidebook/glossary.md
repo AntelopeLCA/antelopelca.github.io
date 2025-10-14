@@ -1,7 +1,8 @@
 ---
 layout: page
 title: Glossary of LCA Terms
-permalink: /glossary/
+permalink: /guidebook/glossary
+parent: /guidebook/
 ---
 
 # O
