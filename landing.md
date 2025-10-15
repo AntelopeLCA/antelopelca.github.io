@@ -30,15 +30,15 @@ Antelope consists of a set of computational tools to be run on a practitioner's 
 This site is dedicated to describing what Antelope is and how it works. The intended audience is primarily LCA practitioners and LCA-adjacent sustainability professionals.  
 
 The two main areas of the site are the [guidebook](/guidebook) and the [blog](/posts).  The blog posts are organized into problems (/tags/problems) and  solutions (/tags/solutions).
-=
+
 
 ---
 
 ### 👉 Get Started
 
+- 🌐 [Learn about qdb](/guidebook/qdb), the Antelope quantity database
 - 📖 [Read the blog](/posts/)
 - 📬 Contact us
-- 📄 Download the whitepaper
 
 ---
 
